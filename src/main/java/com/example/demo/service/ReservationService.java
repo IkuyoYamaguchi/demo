@@ -44,4 +44,8 @@ public class ReservationService {
     public Reservation updateReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
+    // 予約を削除する
+    public void deleteReservation(Long id) {
+        reservationRepository.deleteById(id);
+    }
 }

@@ -54,4 +54,19 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("指定された予約が見つかりません。");
         }
     }
+    // ④ 予約削除API (DELETE /api/reservations/{id})
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable Long id) {
+        try {
+            Optional<Reservation> optionalReservation = reservationService.findById(id);
+            if (optionalReservation.isPresent()) {
+                reservationService.deleteReservation(id); // または reservationRepository.deleteById(id);
+                return ResponseEntity.ok("予約を完全に削除しました。");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("指定された予約が見つかりません。");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("削除に失敗しました。");
+        }
+    }
 }
